@@ -1,3 +1,9 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   text-align: center;
   background-color: black;
@@ -22,12 +28,16 @@ body {
   color: white;
   cursor: pointer;
 }
+
 .floor {
   display: flex;
-  background-color: pink;
+  background-color: #4b4453;
   height: 220px;
   margin-bottom: 10px;
+  /* justify-content: space-between; */
+  /* position: relative; */
 }
+
 .floor button {
   width: 5rem;
   margin: 1rem;
@@ -38,23 +48,39 @@ body {
   color: white;
   cursor: pointer;
 }
-.btns {
+.buttons {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  width: fit-content;
+  height: 100%;
 }
-.lift-btn {
-  display: flex;
-  flex-direction: row;
+.button-up,
+.button-down {
+  width: 5rem;
+  height: 3rem;
+  padding: 10px;
+}
+.left-door,
+.right-door {
+  width: 5rem;
+  height: 200px;
+  background-color: rgb(188, 63, 17);
+  transition: width 2.5s;
+  border: 1px solid white;
 }
 .lift {
-  height: 12rem;
-  margin: 0 2rem;
-  width: 8rem;
-  background-color: grey;
-}
-.mowa {
-  background-color: green;
-}
-.left-door:hover {
-  background-color: #000;
+  height: 200px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px 20px 10px 0px;
+  width: 10rem;
+  position: relative;
+  transition: bottom 4s;
+  /* left: 8rem;*/
+  bottom: 0;
+
+  /* background-color: grey; */
 }
