@@ -1,0 +1,60 @@
+body {
+  text-align: center;
+  background-color: black;
+  color: white;
+  padding: 2rem;
+}
+.controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 10rem;
+  margin-top: 1rem;
+}
+#generate-btn {
+  width: 10rem;
+  margin: 1rem;
+  padding: 10px;
+  border-radius: 3px;
+  background-color: orangered;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+.floor {
+  display: flex;
+  background-color: pink;
+  height: 220px;
+  margin-bottom: 10px;
+}
+.floor button {
+  width: 5rem;
+  margin: 1rem;
+  padding: 10px;
+  border-radius: 3px;
+  background-color: orangered;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+.btns {
+  display: flex;
+  flex-direction: column;
+}
+.lift-btn {
+  display: flex;
+  flex-direction: row;
+}
+.lift {
+  height: 12rem;
+  margin: 0 2rem;
+  width: 8rem;
+  background-color: grey;
+}
+.mowa {
+  background-color: green;
+}
+.left-door:hover {
+  background-color: #000;
+}
