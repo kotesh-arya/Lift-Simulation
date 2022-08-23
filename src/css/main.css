@@ -3,14 +3,12 @@ body {
   background-color: black;
   color: white;
   padding: 2rem;
-  /* height: 100vh; */
 }
 .controls {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  /* background-color: red; */
   height: 10rem;
   margin-top: 1rem;
 }
@@ -26,10 +24,7 @@ body {
 }
 .floor {
   display: flex;
-  /* flex-direction: column; */
-  /* justify-content: space-between; */
   background-color: pink;
-  /* background-color: #4b4453; */
   height: 220px;
   margin-bottom: 10px;
 }
