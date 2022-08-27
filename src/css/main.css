@@ -52,18 +52,26 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: fit-content;
+  align-items: center;
   height: 100%;
+  width: 15%;
 }
 .button-up,
 .button-down {
-  width: 5rem;
-  height: 3rem;
+  width: 4rem;
+  height: 4rem;
   padding: 10px;
+  border-radius: 50%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 10px 0 0 10px;
 }
 .left-door,
 .right-door {
-  width: 5rem;
+  width: 50px;
   height: 200px;
   background-color: rgb(188, 63, 17);
   transition: width 2.5s;
@@ -75,12 +83,16 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 10px 20px 10px 0px;
-  width: 10rem;
+  margin: 10px 10px 10px 20px;
+  width: 100px;
   position: relative;
   transition: bottom 4s;
-  /* left: 8rem;*/
   bottom: 0;
 
   /* background-color: grey; */
+}
+.lifts-section {
+  /* width: 80%; */
+  /* max-width: 80%; */
+  display: flex;
 }

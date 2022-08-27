@@ -12,16 +12,18 @@
       <h1>Lift Simulation</h1>
 
       <div class="controls">
-        <label for="lift">
-          No Of Lifts
-          <input class="lift-count" value="1" type="number" />
-        </label>
         <label for="floor">
           No of Floors
-          <input class="floor-count" value="2" type="number" type="text" />
+          <input class="floor-count" value="3" min="2" type="number" />
         </label>
+        <label for="lift">
+          No Of Lifts
+          <input class="lift-count" value="2" min="1" type="number" />
+        </label>
+
         <button id="generate-btn">GENERATE</button>
         <div class="alert"></div>
+       
       </div>
 
       <div class="lift-space"></div>
