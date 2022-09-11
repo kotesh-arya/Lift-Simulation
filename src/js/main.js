@@ -50,23 +50,25 @@ function storeLiftRequest(position) {
   console.log(liftMovingOrder);
 }
 function moveLiftInOrder(position) {
-  let sliced = liftMovingOrder.slice(-2);
-  console.log("latest movement to be done", sliced[0], sliced[1]);
-  for (let i = 0; i < liftMovingOrder.length - 1; i++) {
-    if (sliced[0] === sliced[1]) {
-      console.log("as both are same open and close doors!");
-      // let staticLift = [...liftsSection.childNodes].find(
-      //   (lift) => Number(lift.dataset.current) === position
-      // );
-      // staticLift.setAttribute("data-status", "busy");
-    } else {
-      console.log("as both are different now move lift to that floor");
-      // let movingLift = [...liftsSection.childNodes].filter(
-      //   (lift) => lift.dataset.status === "free"
-      // )[0];
-      // movingLift.setAttribute("data-status", "busy");
-    }
+  // let sliced = liftMovingOrder.slice(-2);
+  // console.log("latest movement to be done", sliced[0], sliced[1]);
+  let stationaryLift = [...liftsSection.childNodes].find(
+    (lift) => lift.dataset.status === "free"
+  );
+  console.log(stationaryLift);
+  // for (let i = 0; i < liftMovingOrder.length - 1; i++) {
+  if (Number(stationaryLift.dataset.current) === position) {
+    console.log(" open and close doors!");
+    // let staticLift = [...liftsSection.childNodes].find(
+    //   (lift) => Number(lift.dataset.current) === position
+    // );
+
+    doorsMovement(stationaryLift, position);
+  } else {
+    liftMovement(stationaryLift, position);
+    doorsMovement(stationaryLift, position);
   }
+  // }
 }
 
 const generateFloorsWithLifts = () => {
@@ -118,26 +120,18 @@ function setFloors() {
       const buttons = document.createElement("div");
       buttons.className = "buttons";
 
-      const buttonUp = document.createElement("div");
+      const buttonUp = document.createElement("button");
       buttonUp.className = "button-up";
       buttonUp.innerText = "UP";
       buttonUp.addEventListener("click", () => {
-        storeLiftRequest(i);
-        moveLiftInOrder(i);
-        // if( there is any lift with status free){
-        //   then trigger the moveLiftInOrder(i);
-        // }else{
-        // store the coming request in an array(the "i")
-        // }
+        handleLiftAvailability(i);
       });
 
-      const buttonDown = document.createElement("div");
+      const buttonDown = document.createElement("button");
       buttonDown.className = "button-down";
       buttonDown.innerText = "DOWN";
       buttonDown.addEventListener("click", () => {
-
-        storeLiftRequest(i);
-        moveLiftInOrder(i);
+        handleLiftAvailability(i);
       });
 
       buttons.append(buttonUp, buttonDown);
@@ -188,8 +182,20 @@ function showEmptyError() {
     liftSpace.innerHTML = `<p>Please Enter valid input Values</p>`;
   }
 }
-
-function doorsMovement() {
+function handleLiftAvailability(position) {
+  // console.log(
+  //   [...liftsSection.childNodes].find((lift) => lift.dataset.status === "free")
+  // );
+  if (
+    [...liftsSection.childNodes].find((lift) => lift.dataset.status === "free")
+  ) {
+    moveLiftInOrder(position);
+  } else {
+    storeLiftRequest(position);
+  }
+}
+function doorsMovement(staticLift, position) {
+  staticLift.setAttribute("data-status", "busy");
   setTimeout(() => {
     const leftDoor = staticLift.childNodes[0];
     const rightDoor = staticLift.childNodes[1];
@@ -197,7 +203,8 @@ function doorsMovement() {
     rightDoor.style.transition = "width 2.5s";
     leftDoor.style.width = "0px";
     rightDoor.style.width = "0px";
-  }, 0);
+    console.log("doors opening");
+  }, Math.abs(Number(staticLift.dataset.current) - position) * 1000);
   setTimeout(() => {
     const leftDoor = staticLift.childNodes[0];
     const rightDoor = staticLift.childNodes[1];
@@ -205,52 +212,49 @@ function doorsMovement() {
     rightDoor.style.transition = "width 5s";
     leftDoor.style.width = `${window.innerWidth / 6.98}px`;
     rightDoor.style.width = `${window.innerWidth / 6.98}px`;
+    console.log("doors closing");
     staticLift.setAttribute("data-status", "free");
-    console.log(
-      staticLift.dataset.status,
-      "is",
-      typeof staticLift.dataset.status
-    );
     staticLift.setAttribute("data-current", position);
-  }, 3000);
+  }, Math.abs(Number(staticLift.dataset.current) - position) * 4000);
 }
-function liftMovement() {
-  movingLift.style.transition = `bottom ${
-    Math.abs(sliced[0] - sliced[1]) * 2
+function liftMovement(stationaryLift, position) {
+  console.log(" now move lift to that floor");
+  stationaryLift.setAttribute("data-status", "busy");
+
+  stationaryLift.style.transition = `bottom ${
+    Math.abs(Number(stationaryLift.dataset.current) - position) * 2
   }s`;
 
-  movingLift.style.bottom = `${
-    (window.innerWidth / 6.98) * sliced[1] +
-    (sliced[1] - 1 * (window.innerWidth / 153.6)) +
-    sliced[1] * (window.innerWidth / 153.6) -
+  stationaryLift.style.bottom = `${
+    (window.innerWidth / 6.98) * position +
+    (position - 1 * (window.innerWidth / 153.6)) +
+    position * (window.innerWidth / 153.6) -
     window.innerWidth / 7.31 -
     window.innerWidth / 139.6
   }px`;
-  setTimeout(() => {
-    const leftDoor = movingLift.childNodes[0];
-    const rightDoor = movingLift.childNodes[1];
-    leftDoor.style.transition = "width 2.5s";
-    rightDoor.style.transition = "width 2.5s";
-    leftDoor.style.width = "0px";
-    rightDoor.style.width = "0px";
-  }, Math.abs(sliced[1] - sliced[0]) * 2000);
-  setTimeout(() => {
-    const leftDoor = movingLift.childNodes[0];
-    const rightDoor = movingLift.childNodes[1];
-    leftDoor.style.transition = "width 5s";
-    rightDoor.style.transition = "width 5s";
-    leftDoor.style.width = `${window.innerWidth / 6.98}px`;
-    rightDoor.style.width = `${window.innerWidth / 6.98}px`;
-  }, Math.abs(sliced[1] - sliced[0]) * 2000 + 3000);
+  doorsMovement(stationaryLift, position);
+  // setTimeout(() => {
+  //   const leftDoor = stationaryLift.childNodes[0];
+  //   const rightDoor = stationaryLift.childNodes[1];
+  //   leftDoor.style.transition = "width 2.5s";
+  //   rightDoor.style.transition = "width 2.5s";
+  //   leftDoor.style.width = "0px";
+  //   rightDoor.style.width = "0px";
+  // }, Math.abs(position - Number(stationaryLift.dataset.current)) * 2000 + 1000);
+  // setTimeout(() => {
+  //   const leftDoor = stationaryLift.childNodes[0];
+  //   const rightDoor = stationaryLift.childNodes[1];
+  //   leftDoor.style.transition = "width 5s";
+  //   rightDoor.style.transition = "width 5s";
+  //   leftDoor.style.width = `${window.innerWidth / 6.98}px`;
+  //   rightDoor.style.width = `${window.innerWidth / 6.98}px`;
+  //   stationaryLift.setAttribute("data-status", "free");
+  //   stationaryLift.setAttribute("data-current", position);
 
-  setTimeout(() => {
-    movingLift.setAttribute("data-status", "free");
-    movingLift.setAttribute("data-current", sliced[1]);
-
-    console.log(
-      "moved lift updated current value",
-      movingLift.getAttribute("data-current")
-    );
-    console.log("lift is now", movingLift.dataset.status);
-  }, Math.abs(sliced[1] - sliced[0]) * 2000 + 6000);
+  //   console.log(
+  //     "moved lift updated current value",
+  //     stationaryLift.getAttribute("data-current")
+  //   );
+  //   console.log("lift is now", stationaryLift.dataset.status);
+  // }, Math.abs(position - Number(stationaryLift.dataset.current)) * 2000 + 6000);
 }
