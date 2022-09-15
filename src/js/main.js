@@ -7,7 +7,6 @@ const liftsSection = document.createElement("div");
 liftsSection.className = "lifts-section";
 
 const windowSpace = document.getElementById("window");
-windowSpace.innerHTML = window.innerWidth;
 
 function resizeElements() {
   const floors = [...document.querySelectorAll(".floor")];
@@ -41,34 +40,21 @@ window.addEventListener("resize", resizeElements);
 
 const lifts = liftsSection.childNodes;
 
-let liftMovingOrder = [1];
-let sliced = liftMovingOrder.slice(-2);
-// console.log(sliced);
+let liftMovingOrder = [];
 
 function storeLiftRequest(position) {
-  liftMovingOrder = [...liftMovingOrder, position];
-  console.log(liftMovingOrder);
+  liftMovingOrder.push(position);
 }
 function moveLiftInOrder(position) {
-  // let sliced = liftMovingOrder.slice(-2);
-  // console.log("latest movement to be done", sliced[0], sliced[1]);
   let stationaryLift = [...liftsSection.childNodes].find(
     (lift) => lift.dataset.status === "free"
   );
-  console.log(stationaryLift);
-  // for (let i = 0; i < liftMovingOrder.length - 1; i++) {
   if (Number(stationaryLift.dataset.current) === position) {
-    console.log(" open and close doors!");
-    // let staticLift = [...liftsSection.childNodes].find(
-    //   (lift) => Number(lift.dataset.current) === position
-    // );
-
     doorsMovement(stationaryLift, position);
   } else {
     liftMovement(stationaryLift, position);
     doorsMovement(stationaryLift, position);
   }
-  // }
 }
 
 const generateFloorsWithLifts = () => {
@@ -174,7 +160,6 @@ function setLifts() {
     }
   } else {
     liftSpace.innerHTML = `<p>Please Enter valid lift input Value</p>`;
-    console.log("please add more than 0 floors");
   }
 }
 function showEmptyError() {
@@ -183,9 +168,6 @@ function showEmptyError() {
   }
 }
 function handleLiftAvailability(position) {
-  // console.log(
-  //   [...liftsSection.childNodes].find((lift) => lift.dataset.status === "free")
-  // );
   if (
     [...liftsSection.childNodes].find((lift) => lift.dataset.status === "free")
   ) {
@@ -194,67 +176,46 @@ function handleLiftAvailability(position) {
     storeLiftRequest(position);
   }
 }
-function doorsMovement(staticLift, position) {
-  staticLift.setAttribute("data-status", "busy");
+function doorsMovement(lift, position) {
+  lift.setAttribute("data-status", "busy");
+  let distance = Math.abs(Number(lift.dataset.current) - position);
   setTimeout(() => {
-    const leftDoor = staticLift.childNodes[0];
-    const rightDoor = staticLift.childNodes[1];
+    const leftDoor = lift.childNodes[0];
+    const rightDoor = lift.childNodes[1];
     leftDoor.style.transition = "width 2.5s";
     rightDoor.style.transition = "width 2.5s";
     leftDoor.style.width = "0px";
     rightDoor.style.width = "0px";
-    console.log("doors opening");
-  }, Math.abs(Number(staticLift.dataset.current) - position) * 1000);
+  }, distance * 1000 + 1500);
   setTimeout(() => {
-    const leftDoor = staticLift.childNodes[0];
-    const rightDoor = staticLift.childNodes[1];
-    leftDoor.style.transition = "width 5s";
-    rightDoor.style.transition = "width 5s";
+    const leftDoor = lift.childNodes[0];
+    const rightDoor = lift.childNodes[1];
+    leftDoor.style.transition = "width 4.5s";
+    rightDoor.style.transition = "width 4.5s";
     leftDoor.style.width = `${window.innerWidth / 6.98}px`;
     rightDoor.style.width = `${window.innerWidth / 6.98}px`;
-    console.log("doors closing");
-    staticLift.setAttribute("data-status", "free");
-    staticLift.setAttribute("data-current", position);
-  }, Math.abs(Number(staticLift.dataset.current) - position) * 4000);
+    lift.setAttribute("data-status", "free");
+    lift.setAttribute("data-current", position);
+  }, distance * 1000 + 5500);
 }
-function liftMovement(stationaryLift, position) {
-  console.log(" now move lift to that floor");
-  stationaryLift.setAttribute("data-status", "busy");
+function liftMovement(lift, position) {
+  let distance = Math.abs(Number(lift.dataset.current) - position);
+  lift.setAttribute("data-status", "busy");
 
-  stationaryLift.style.transition = `bottom ${
-    Math.abs(Number(stationaryLift.dataset.current) - position) * 2
-  }s`;
-
-  stationaryLift.style.bottom = `${
-    (window.innerWidth / 6.98) * position +
-    (position - 1 * (window.innerWidth / 153.6)) +
-    position * (window.innerWidth / 153.6) -
-    window.innerWidth / 7.31 -
-    window.innerWidth / 139.6
+  lift.style.transition = `bottom ${distance * 2}s`;
+  lift.style.bottom = `${
+    Math.round(window.innerWidth / 6.98) * position +
+    (position - 1 * Math.round(window.innerWidth / 153.6)) +
+    position * Math.round(window.innerWidth / 153.6) -
+    Math.round(window.innerWidth / 7.31) -
+    Math.round(window.innerWidth / 153.6)
   }px`;
-  doorsMovement(stationaryLift, position);
-  // setTimeout(() => {
-  //   const leftDoor = stationaryLift.childNodes[0];
-  //   const rightDoor = stationaryLift.childNodes[1];
-  //   leftDoor.style.transition = "width 2.5s";
-  //   rightDoor.style.transition = "width 2.5s";
-  //   leftDoor.style.width = "0px";
-  //   rightDoor.style.width = "0px";
-  // }, Math.abs(position - Number(stationaryLift.dataset.current)) * 2000 + 1000);
-  // setTimeout(() => {
-  //   const leftDoor = stationaryLift.childNodes[0];
-  //   const rightDoor = stationaryLift.childNodes[1];
-  //   leftDoor.style.transition = "width 5s";
-  //   rightDoor.style.transition = "width 5s";
-  //   leftDoor.style.width = `${window.innerWidth / 6.98}px`;
-  //   rightDoor.style.width = `${window.innerWidth / 6.98}px`;
-  //   stationaryLift.setAttribute("data-status", "free");
-  //   stationaryLift.setAttribute("data-current", position);
 
-  //   console.log(
-  //     "moved lift updated current value",
-  //     stationaryLift.getAttribute("data-current")
-  //   );
-  //   console.log("lift is now", stationaryLift.dataset.status);
-  // }, Math.abs(position - Number(stationaryLift.dataset.current)) * 2000 + 6000);
+  doorsMovement(lift, position);
+  setTimeout(() => {
+    if (liftMovingOrder.length > 0) {
+      liftMovement(lift, liftMovingOrder[0]);
+      let removedRequest = liftMovingOrder.shift();
+    }
+  }, distance * 1000 + 6500);
 }

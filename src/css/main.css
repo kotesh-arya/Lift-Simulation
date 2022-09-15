@@ -56,10 +56,10 @@ body {
   height: 100%;
   width: 15%;
 }
-.button-up,
+/* .button-up,
 .button-down {
-  width: 4rem;
-  height: 4rem;
+  /* width: 2rem;
+  height: 2rem;
   padding: 10px;
   border-radius: 50%;
   background-color: black;
@@ -67,33 +67,31 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin: 10px 0 0 10px;
-}
+  margin: 10px 0 0 10px; */
+/* } */ 
 .left-door,
 .right-door {
   width: 50px;
-  height: 200px;
+  height: 250px;
   background-color: rgb(188, 63, 17);
   transition: width 2.5s;
   border: 1px solid white;
 }
 .lift {
-  height: 200px;
+  /* height: 250px; */
   background-color: white;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* margin: 15px 15px 15px 10px; */
-  /* margin: 0.9rem 15px 15px 10px; */
+ 
   margin-right: 30px;
-  margin-top: 10px;
+  /* margin-top: 10px; */
 
   width: 100px;
   position: relative;
   transition: bottom 4s;
   bottom: 0;
 
-  /* background-color: grey; */
 }
 .lifts-section {
   /* width: 80%; */
