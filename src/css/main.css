@@ -33,17 +33,17 @@ body {
 
 .floor {
   display: flex;
-  background-color: #4b4453;
-  height: 100px;
-  margin-bottom: 10px;
+  height: 170px;
+  border-bottom: 2px solid white;
 }
 
 .floor button {
-  width: 80px;
+  width: 15px;
+  height: 15px;
   margin: 1rem;
   border-radius: 3px;
-  background-color: orangered;
-  border: none;
+  background-color: rgb(0, 0, 0);
+  border: 2px solid white;
   color: white;
   cursor: pointer;
 }
@@ -54,7 +54,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 15%;
+  width: 6%;
 }
 
 .button-up,
@@ -73,13 +73,13 @@ body {
 .left-door,
 .right-door {
   width: 50px;
-  height: 100px;
+  height: 150px;
   background-color: rgb(188, 63, 17);
   border: 1px solid white;
 }
 
 .lift {
-  height: 100px;
+  height: 150px;
   width: 100px;
   background-color: white;
   display: flex;
@@ -89,8 +89,101 @@ body {
   position: relative;
   transition: bottom 4s;
   bottom: 0;
+  margin-top: 20px;
 }
 
 .lifts-section {
   display: flex;
+}
+
+@media (max-width: 1940px) {
+  .lift {
+    height: 100px;
+    width: 80px;
+    margin-top: 70px;
+  }
+  .left-door,
+  .right-door {
+    height: 100%;
+    width: 100%;
+  }
+
+  .buttons {
+    transition: 1s ease-in-out;
+  }
+}
+@media (max-width: 1904px) {
+  .lift {
+    height: 80px;
+    width: 60px;
+    margin-top: 90px;
+  }
+}
+@media (max-width: 1710px) {
+  .buttons {
+    width: 15%;
+    transition: 1s ease-in-out;
+  }
+}
+@media (max-width: 1290px) {
+  .buttons {
+    width: 12%;
+    transition: 1s ease-in-out;
+  }
+}
+@media (max-width: 1110px) {
+  .lift {
+    height: 70px;
+    width: 50px;
+    margin-top: 100px;
+  }
+  .buttons {
+    width: 16%;
+    transition: 1s ease-in-out;
+  }
+  .lifts-section {
+    width: 80%;
+  }
+}
+@media (max-width: 950px) {
+  .lift {
+    height: 50px;
+    width: 30px;
+    margin-top: 120px;
+  }
+  .buttons {
+    width: 15%;
+    transition: 1s ease-in-out;
+  }
+  .left-door,
+  .right-door {
+    border: 0.2px solid white;
+  }
+}
+
+@media (max-width: 850px) {
+  .lift {
+    height: 40px;
+    width: 30px;
+    margin-top: 130px;
+  }
+  .left-door,
+  .right-door {
+    border: 0.2px solid white;
+  }
+}
+@media (max-width: 730px) {
+  .lift {
+    height: 30px;
+    width: 20px;
+    margin-top: 140px;
+    margin-right: 10px;
+  }
+  .lifts-section {
+    width: 280px;
+  }
+  .left-door,
+  .right-door {
+    border: 0.2px solid white;
+  }
 }

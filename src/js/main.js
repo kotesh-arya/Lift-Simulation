@@ -6,8 +6,6 @@ const alertSpace = document.querySelector(".alert");
 const liftsSection = document.createElement("div");
 liftsSection.className = "lifts-section";
 
-const windowSpace = document.getElementById("window");
-
 const lifts = liftsSection.childNodes;
 
 let liftMovingOrder = [];
@@ -64,14 +62,14 @@ function setFloors() {
 
       const buttonUp = document.createElement("button");
       buttonUp.className = "button-up";
-      buttonUp.innerText = "UP";
+      buttonUp.innerText = "🔺";
       buttonUp.addEventListener("click", () => {
         handleLiftAvailability(i);
       });
 
       const buttonDown = document.createElement("button");
       buttonDown.className = "button-down";
-      buttonDown.innerText = "DOWN";
+      buttonDown.innerText = "🔻";
       buttonDown.addEventListener("click", () => {
         handleLiftAvailability(i);
       });
@@ -133,17 +131,17 @@ function doorsMovement(lift, position) {
     rightDoor.style.transition = "width 2.5s";
     leftDoor.style.width = "0px";
     rightDoor.style.width = "0px";
-  }, distance * 1000 + 1500);
+  }, distance * 1000 + 1800);
   setTimeout(() => {
     const leftDoor = lift.childNodes[0];
     const rightDoor = lift.childNodes[1];
-    leftDoor.style.transition = "width 2.5s";
-    rightDoor.style.transition = "width 2.5s";
+    leftDoor.style.transition = "width 2.3s";
+    rightDoor.style.transition = "width 2.3s";
     leftDoor.style.width = "50px";
     rightDoor.style.width = "50px";
     lift.setAttribute("data-status", "free");
     lift.setAttribute("data-current", position);
-  }, distance * 1000 + 3500);
+  }, distance * 1000 + 5200);
 }
 function liftMovement(lift, position) {
   let distance = Math.abs(Number(lift.dataset.current) - position);
@@ -151,13 +149,14 @@ function liftMovement(lift, position) {
   lift.setAttribute("data-status", "busy");
 
   lift.style.transition = `bottom ${distance * 2}s`;
-  lift.style.bottom = `${100 * (position - 1) + (position - 1) * 10}px`;
+  lift.style.bottom = `${170 * (position - 1)}px`;
   console.log(lift.style.bottom);
   doorsMovement(lift, position);
+  console.log(liftMovingOrder);
   setTimeout(() => {
     if (liftMovingOrder.length > 0) {
       liftMovement(lift, liftMovingOrder[0]);
       liftMovingOrder.shift();
     }
-  }, distance * 1000 + 6500);
+  }, distance * 1000 + 6800);
 }
