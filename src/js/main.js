@@ -6,38 +6,6 @@ const alertSpace = document.querySelector(".alert");
 const liftsSection = document.createElement("div");
 liftsSection.className = "lifts-section";
 
-const windowSpace = document.getElementById("window");
-
-function resizeElements() {
-  const floors = [...document.querySelectorAll(".floor")];
-  floors.map((floor) => {
-    floor.style.height = `${window.innerWidth / 6.98}px`;
-    const buttons = [...floor.childNodes[0].childNodes];
-    buttons.map((button) => {
-      button.style.width = `${window.innerWidth / 19.2}px`;
-      button.style.height = `${window.innerWidth / 19.2}px`;
-      button.style.fontSize = `${window.innerWidth / 96}px`;
-    });
-  });
-  const lifts = [...document.querySelectorAll(".lift")];
-  lifts.map((lift) => {
-    lift.style.width = `${window.innerWidth / 15.36}px`;
-    lift.childNodes[0].style.height = `${window.innerWidth / 7.68}px`;
-    lift.childNodes[1].style.height = `${window.innerWidth / 7.68}px`;
-
-    lift.style.height = `${window.innerWidth / 7.68}px`;
-  });
-  const leftDoor = document.querySelector(".left-door");
-  const rightDoor = document.querySelector(".right-door");
-
-  leftDoor.style.height = `${window.innerWidth / 7.68}px`;
-
-  rightDoor.style.height = `${window.innerWidth / 7.68}px`;
-
-  windowSpace.innerHTML = window.innerWidth;
-}
-window.addEventListener("resize", resizeElements);
-
 const lifts = liftsSection.childNodes;
 
 let liftMovingOrder = [];
@@ -79,20 +47,6 @@ const generateFloorsWithLifts = () => {
   liftSpace.childNodes[floorNum - 1].childNodes[0].removeChild(removableUpBtn);
 
   showEmptyError();
-  const lifts = [...document.querySelectorAll(".lift")];
-  lifts.map((lift) => {
-    lift.style.width = `${window.innerWidth / 15.36}px`;
-  });
-  const floors = [...document.querySelectorAll(".floor")];
-  floors.map((floor) => {
-    floor.style.height = `${window.innerWidth / 6.98}px`;
-    const buttons = [...floor.childNodes[0].childNodes];
-    buttons.map((button) => {
-      button.style.width = `${window.innerWidth / 19.2}px`;
-      button.style.height = `${window.innerWidth / 19.2}px`;
-      button.style.fontSize = `${window.innerWidth / 96}px`;
-    });
-  });
 };
 generateBtn.addEventListener("click", generateFloorsWithLifts);
 function setFloors() {
@@ -108,14 +62,14 @@ function setFloors() {
 
       const buttonUp = document.createElement("button");
       buttonUp.className = "button-up";
-      buttonUp.innerText = "UP";
+      buttonUp.innerText = "🔺";
       buttonUp.addEventListener("click", () => {
         handleLiftAvailability(i);
       });
 
       const buttonDown = document.createElement("button");
       buttonDown.className = "button-down";
-      buttonDown.innerText = "DOWN";
+      buttonDown.innerText = "🔻";
       buttonDown.addEventListener("click", () => {
         handleLiftAvailability(i);
       });
@@ -134,23 +88,14 @@ function setLifts() {
     for (let i = 1; i < Number(liftCount.value) + 1; i++) {
       const leftDoor = document.createElement("div");
       leftDoor.className = "left-door";
-      leftDoor.style.height = `${window.innerWidth / 7.68}px`;
-      leftDoor.style.width = `${window.innerWidth / 6.98}px`;
 
       const rightDoor = document.createElement("div");
       rightDoor.className = "right-door";
-      rightDoor.style.height = `${window.innerWidth / 7.68}px`;
-      rightDoor.style.width = `${window.innerWidth / 6.98}px`;
 
       const lift = document.createElement("div");
       lift.setAttribute("data-status", "free");
       lift.setAttribute("data-current", 1);
       lift.className = "lift";
-
-      lift.style.width = `${window.innerWidth / 15.36}px`;
-      lift.style.height = `${window.innerWidth / 7.68}px`;
-      lift.style.marginRight = `${window.innerWidth / 51.2}px`;
-      lift.style.marginTop = `${window.innerWidth / 153.6}px`;
 
       lift.append(leftDoor, rightDoor);
       const liftsSection = document.querySelector(".lifts-section");
@@ -186,36 +131,32 @@ function doorsMovement(lift, position) {
     rightDoor.style.transition = "width 2.5s";
     leftDoor.style.width = "0px";
     rightDoor.style.width = "0px";
-  }, distance * 1000 + 1500);
+  }, distance * 1000 + 1800);
   setTimeout(() => {
     const leftDoor = lift.childNodes[0];
     const rightDoor = lift.childNodes[1];
-    leftDoor.style.transition = "width 4.5s";
-    rightDoor.style.transition = "width 4.5s";
-    leftDoor.style.width = `${window.innerWidth / 6.98}px`;
-    rightDoor.style.width = `${window.innerWidth / 6.98}px`;
+    leftDoor.style.transition = "width 2.3s";
+    rightDoor.style.transition = "width 2.3s";
+    leftDoor.style.width = "50px";
+    rightDoor.style.width = "50px";
     lift.setAttribute("data-status", "free");
     lift.setAttribute("data-current", position);
-  }, distance * 1000 + 5500);
+  }, distance * 1000 + 5200);
 }
 function liftMovement(lift, position) {
   let distance = Math.abs(Number(lift.dataset.current) - position);
+  console.log(distance);
   lift.setAttribute("data-status", "busy");
 
   lift.style.transition = `bottom ${distance * 2}s`;
-  lift.style.bottom = `${
-    Math.round(window.innerWidth / 6.98) * position +
-    (position - 1 * Math.round(window.innerWidth / 153.6)) +
-    position * Math.round(window.innerWidth / 153.6) -
-    Math.round(window.innerWidth / 7.31) -
-    Math.round(window.innerWidth / 153.6)
-  }px`;
-
+  lift.style.bottom = `${170 * (position - 1)}px`;
+  console.log(lift.style.bottom);
   doorsMovement(lift, position);
+  console.log(liftMovingOrder);
   setTimeout(() => {
     if (liftMovingOrder.length > 0) {
       liftMovement(lift, liftMovingOrder[0]);
-      let removedRequest = liftMovingOrder.shift();
+      liftMovingOrder.shift();
     }
-  }, distance * 1000 + 6500);
+  }, distance * 1000 + 6800);
 }
