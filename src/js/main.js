@@ -124,24 +124,26 @@ function handleLiftAvailability(position) {
 function doorsMovement(lift, position) {
   lift.setAttribute("data-status", "busy");
   let distance = Math.abs(Number(lift.dataset.current) - position);
+  console.log(distance * 2000 + 1800,"seconds")
   setTimeout(() => {
+    console.log("doors open!!!")
     const leftDoor = lift.childNodes[0];
     const rightDoor = lift.childNodes[1];
     leftDoor.style.transition = "width 2.5s";
     rightDoor.style.transition = "width 2.5s";
     leftDoor.style.width = "0px";
     rightDoor.style.width = "0px";
-  }, distance * 1000 + 1800);
+  }, distance * 2000 + 1000);
   setTimeout(() => {
     const leftDoor = lift.childNodes[0];
     const rightDoor = lift.childNodes[1];
-    leftDoor.style.transition = "width 2.3s";
-    rightDoor.style.transition = "width 2.3s";
+    leftDoor.style.transition = "width 2.5s";
+    rightDoor.style.transition = "width 2.5s";
     leftDoor.style.width = "50px";
     rightDoor.style.width = "50px";
     lift.setAttribute("data-status", "free");
     lift.setAttribute("data-current", position);
-  }, distance * 1000 + 5200);
+  }, distance * 2000 + 4400);
 }
 function liftMovement(lift, position) {
   let distance = Math.abs(Number(lift.dataset.current) - position);
@@ -152,11 +154,11 @@ function liftMovement(lift, position) {
   lift.style.bottom = `${170 * (position - 1)}px`;
   console.log(lift.style.bottom);
   doorsMovement(lift, position);
-  console.log(liftMovingOrder);
+  // console.log(liftMovingOrder);
   setTimeout(() => {
     if (liftMovingOrder.length > 0) {
       liftMovement(lift, liftMovingOrder[0]);
       liftMovingOrder.shift();
     }
-  }, distance * 1000 + 6800);
+  }, distance * 2000 + 6000);
 }
