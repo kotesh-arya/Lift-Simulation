@@ -7,7 +7,8 @@
 
 # User Interface of the App
 
-![Screenshot (102)](https://user-images.githubusercontent.com/69259490/187444768-b41e8a6d-64c5-4430-8eb8-335464349221.png)
+![image](https://github.com/user-attachments/assets/75250273-709e-40f8-b24f-366c7390558d)
+
 
 # Features Included
   - Have a page where you input the number of floors and lifts from the user
